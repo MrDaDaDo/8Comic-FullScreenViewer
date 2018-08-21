@@ -1,4 +1,4 @@
-# 8Comic-FullScreenViewer
+# 8Comic FullScreen Viewer
 - FullScreen automatic
 
 # How to Use
