@@ -14,4 +14,6 @@ Step2. Install script
 # HotKey
 - Right: Next page
 - Left: Prev page
+- Page Down: Next chapter
+- Page Up: Prev chapter
 - Esc FullScreen / UnFullScreen
