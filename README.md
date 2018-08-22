@@ -12,5 +12,6 @@ Step2. Install script
 - Click [8Comic-FullScreenViewer.user.js](https://github.com/MrDaDaDo/8Comic-FullScreenViewer/raw/master/8Comic-FullScreenViewer.user.js) to install script.
 
 # HotKey
-- Left Click: Next page
-- Right Click: Exit fullscreen
+- Right: Next page
+- Left: Prev page
+- Esc FullScreen / UnFullScreen
