@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.4
+// @version      1.5
 // @author       MrDaDaDo
 // @include      /^https:\/\/v\.comicbus\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
@@ -8,7 +8,6 @@
 
 (function() {
     if(window.top != window.self) return;
-    alert(location.href);
     var $ = window.jQuery;
     var $img = $('#TheImg');
     var $td = $img.parent();
@@ -78,7 +77,6 @@
     var checkImageSrc = function($_iframe, _pageIndex) {
         let imageSrc = $_iframe.contents().find('#TheImg').attr('src');
         if(imageSrc) {
-            console.log("Page OK: " + _pageIndex);
             imageHash[_pageIndex] =imageSrc;
             $_iframe.attr('src','');
             $_iframe.remove();
@@ -97,7 +95,6 @@
             $iframe.attr('width','1px');
             $iframe.attr('height','1px');
             $iframeTmp.append($iframe);
-            console.log("Loading Page: " + pageIndex);
             checkImageSrc($iframe, pageIndex);
         }
     };
@@ -109,11 +106,11 @@
         loadImage();
     };
     $("body").keydown(function(e) {
-        if(e.keyCode == 39) { //Q
+        if(e.keyCode == 39) { // right
             showNextImage();
-        } else if(e.keyCode == 37) { //E
+        } else if(e.keyCode == 37) { // left
             showPrevImage();
-        }else if(e.keyCode == 27) { //esc
+        }else if(e.keyCode == 27) { // esc
             changeFullScreen();
         }
     });
