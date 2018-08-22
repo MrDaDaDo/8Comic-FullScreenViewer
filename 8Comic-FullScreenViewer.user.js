@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.5
+// @version      1.6
 // @author       MrDaDaDo
 // @include      /^https:\/\/v\.comicbus\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
@@ -10,12 +10,13 @@
     if(window.top != window.self) return;
     var $ = window.jQuery;
     var $img = $('#TheImg');
+    var $preloadImg = $('<img style="display:none;">');
     var $td = $img.parent();
-    var $pageCount = $('<span style="position:absolute; bottom:0px; left:0px; color:#ABCDEF; font-size:18pt;">1/52</span>');
+    var $pageCount = $('<span style="position:absolute; bottom:0px; right:36px; color:#ABCDEF; font-size:18pt;">1/52</span>');
     var isFullScreen = false;
     var $iframeTmp = $("table:first");
     var bookID = location.href.split('-')[1].split('.')[0];
-    var bookCh = location.href.split('ch=')[1].split('-')[0];
+    var bookCh = parseInt(location.href.split('ch=')[1].split('-')[0]);
     var pageAmount = $("#pageindex")[0].childElementCount;
     var currentPageIndex = $("#pageindex")[0].selectedIndex + 1;
     var imageHash = {};
@@ -24,6 +25,7 @@
     $img = $('#TheImg');
     $td = $img.parent();
     $td.append($pageCount);
+    $td.append($preloadImg);
     $img.css('object-fit','contain');
     var genPageUrl = function(bookID, bookCh, pageIndex) {
         return `https://v.comicbus.com/online/comic-${bookID}.html?ch=${bookCh}-${pageIndex}`;
@@ -57,7 +59,14 @@
             fullScreen();
         }
     };
-
+    var goNextCh = function() {
+        location.href = genPageUrl(bookID, bookCh + 1, 1);
+    };
+    var goPrevCh = function() {
+        if(bookCh > 1) {
+            location.href = genPageUrl(bookID, bookCh - 1, 1);
+        }
+    };
     var showNextImage = function() {
         if(currentPageIndex >= pageAmount) return;
         currentPageIndex++;
@@ -70,7 +79,10 @@
     };
     var loadImage = function() {
         $img.attr('src', imageHash[currentPageIndex]);
-        $pageCount.text(currentPageIndex + "/" + pageAmount);
+        if(currentPageIndex < pageAmount) {
+            $preloadImg.attr('src', imageHash[currentPageIndex + 1]);
+        }
+        $pageCount.text('Ch-' + bookCh + ' ' + currentPageIndex + "/" + pageAmount);
         setTimeout(function() { preloadImage(); }, 10);
         console.log(imageHash);
     };
@@ -106,11 +118,15 @@
         loadImage();
     };
     $("body").keydown(function(e) {
-        if(e.keyCode == 39) { // right
+        if(e.keyCode == 39) { // Right
             showNextImage();
-        } else if(e.keyCode == 37) { // left
+        } else if(e.keyCode == 37) { // Left
             showPrevImage();
-        }else if(e.keyCode == 27) { // esc
+        } else if(e.keyCode == 33) { // Page up
+            goPrevCh();
+        } else if(e.keyCode == 34) { // Page Down
+            goNextCh();
+        } else if(e.keyCode == 27) { // Esc
             changeFullScreen();
         }
     });
