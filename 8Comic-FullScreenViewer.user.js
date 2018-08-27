@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.6
+// @version      1.7
 // @author       MrDaDaDo
 // @include      /^https:\/\/v\.comicbus\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
@@ -15,7 +15,7 @@
     var $pageCount = $('<span style="position:absolute; bottom:0px; right:36px; color:#ABCDEF; font-size:18pt;">1/52</span>');
     var isFullScreen = false;
     var $iframeTmp = $("table:first");
-    var bookID = location.href.split('-')[1].split('.')[0];
+    var bookID = parseBookID();
     var bookCh = parseInt(location.href.split('ch=')[1].split('-')[0]);
     var pageAmount = $("#pageindex")[0].childElementCount;
     var currentPageIndex = $("#pageindex")[0].selectedIndex + 1;
@@ -27,6 +27,9 @@
     $td.append($pageCount);
     $td.append($preloadImg);
     $img.css('object-fit','contain');
+    function parseBookID() {
+        return /(\d+)\.html/.exec(location.href)[1];
+    }
     var genPageUrl = function(bookID, bookCh, pageIndex) {
         return `https://v.comicbus.com/online/comic-${bookID}.html?ch=${bookCh}-${pageIndex}`;
     };
@@ -89,7 +92,7 @@
     var checkImageSrc = function($_iframe, _pageIndex) {
         let imageSrc = $_iframe.contents().find('#TheImg').attr('src');
         if(imageSrc) {
-            imageHash[_pageIndex] =imageSrc;
+            imageHash[_pageIndex] = imageSrc;
             $_iframe.attr('src','');
             $_iframe.remove();
         } else {
