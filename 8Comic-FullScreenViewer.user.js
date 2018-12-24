@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.7
+// @version      1.8
 // @author       MrDaDaDo
 // @include      /^https:\/\/v\.comicbus\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
@@ -64,10 +64,12 @@
     };
     var goNextCh = function() {
         location.href = genPageUrl(bookID, bookCh + 1, 1);
+		$(".comments").hide();
     };
     var goPrevCh = function() {
         if(bookCh > 1) {
             location.href = genPageUrl(bookID, bookCh - 1, 1);
+			$(".comments").hide();
         }
     };
     var showNextImage = function() {
