@@ -1,6 +1,6 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.8
+// @version      1.9
 // @author       MrDaDaDo
 // @include      /^https:\/\/v\.comicbus\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
@@ -27,6 +27,8 @@
     $td.append($pageCount);
     $td.append($preloadImg);
     $img.css('object-fit','contain');
+    $(document).ready(function() { $(".comments").hide(); });
+	$(".comments").hide();
     function parseBookID() {
         return /(\d+)\.html/.exec(location.href)[1];
     }
