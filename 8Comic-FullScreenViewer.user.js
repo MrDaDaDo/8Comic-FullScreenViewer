@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.9
+// @version      1.9.1
 // @author       MrDaDaDo
-// @include      /^https:\/\/v\.comicbus\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
+// @include      /^https:\/\/(v|www)\.(comicbus|comicgood)\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
 // ==/UserScript==
 
@@ -33,7 +33,7 @@
         return /(\d+)\.html/.exec(location.href)[1];
     }
     var genPageUrl = function(bookID, bookCh, pageIndex) {
-        return `https://v.comicbus.com/online/comic-${bookID}.html?ch=${bookCh}-${pageIndex}`;
+        return `/online/comic-${bookID}.html?ch=${bookCh}-${pageIndex}`;
     };
     var fullScreen = function() {
         $td.css('position', 'fixed');
