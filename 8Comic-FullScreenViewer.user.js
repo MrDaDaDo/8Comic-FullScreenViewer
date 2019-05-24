@@ -1,8 +1,8 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.9.1
+// @version      1.9.3
 // @author       MrDaDaDo
-// @include      /^https:\/\/(v|www)\.(comicbus|comicgood)\.com\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
+// @include      /^https:\/\/(v|www)\.(comicbus|comicgood)\.(com|me)\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
 // ==/UserScript==
 
