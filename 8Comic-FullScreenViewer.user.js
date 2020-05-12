@@ -1,8 +1,9 @@
 // ==UserScript==
 // @name         8Comic-FullScreenViewer
-// @version      1.9.3
+// @version      1.10.0
 // @author       MrDaDaDo
-// @include      /^https:\/\/(v|www)\.(comicbus|comicgood)\.(com|me)\/online\/(comic|manga)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
+// /^https:\/\/(v|www)\.(8899|comicbus)\.(live|xyz)\/online\/(a|comic)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
+// @include      /^https:\/\/(8899|comicbus)\.(live|xyz)\/online\/(a|comic)(\-|_)(\d)+\.html\?ch=(\d)+(\-(\d)+)?/
 // @require      https://code.jquery.com/jquery-3.3.1.min.js
 // ==/UserScript==
 
@@ -15,6 +16,7 @@
     var $pageCount = $('<span style="position:absolute; bottom:0px; right:36px; color:#ABCDEF; font-size:18pt;">1/52</span>');
     var isFullScreen = false;
     var $iframeTmp = $("table:first");
+    var pagePrefix = parsePagePrefix();
     var bookID = parseBookID();
     var bookCh = parseInt(location.href.split('ch=')[1].split('-')[0]);
     var pageAmount = $("#pageindex")[0].childElementCount;
@@ -32,8 +34,11 @@
     function parseBookID() {
         return /(\d+)\.html/.exec(location.href)[1];
     }
+    function parsePagePrefix() {
+        return /[a-zA-Z]+-(\d+)\.html/.exec(location.href)[0].toString().split("-")[0];
+    }
     var genPageUrl = function(bookID, bookCh, pageIndex) {
-        return `/online/comic-${bookID}.html?ch=${bookCh}-${pageIndex}`;
+        return `/online/${pagePrefix}-${bookID}.html?ch=${bookCh}-${pageIndex}`;
     };
     var fullScreen = function() {
         $td.css('position', 'fixed');
@@ -91,7 +96,6 @@
         }
         $pageCount.text('Ch-' + bookCh + ' ' + currentPageIndex + "/" + pageAmount);
         setTimeout(function() { preloadImage(); }, 10);
-        console.log(imageHash);
     };
     var checkImageSrc = function($_iframe, _pageIndex) {
         let imageSrc = $_iframe.contents().find('#TheImg').attr('src');
